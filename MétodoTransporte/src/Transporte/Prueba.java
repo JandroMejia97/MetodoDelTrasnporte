@@ -5,17 +5,58 @@
  */
 package Transporte;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+
 /**
  *
  * @author CARLOS ALEJANDRO
  */
-public class Prueba extends javax.swing.JPanel {
+public class Prueba extends javax.swing.JFrame {
+
+    MetodoDelTransporte met = new MetodoDelTransporte();
+    DefaultTableModel costosModel;
+    DatosPrueba datos = new DatosPrueba();
+    Integer origen = 0, destino = 0;
 
     /**
-     * Creates new form Prueba
+     * Creates new form PruebaP
      */
     public Prueba() {
         initComponents();
+        tbCostos.getTableHeader().setPreferredSize(new java.awt.Dimension(0, 30));
+        JTableHeader th = tbCostos.getTableHeader();
+        this.setLocationRelativeTo(null);
+        SpinnerNumberModel nm = new SpinnerNumberModel();
+        nm.setMinimum(0);
+        SpinnerNumberModel Nm = new SpinnerNumberModel();
+        nm.setMinimum(0);
+        costosModel = (DefaultTableModel) tbCostos.getModel();
+        spDestino.setModel(Nm);
+        spOrigen.setModel(nm);
+        soloNumeros(tbCostos);
+    }
+
+    public void soloNumeros(JTable a) {
+        a.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c) && c != '.') {
+                    getToolkit().beep();
+                    e.consume();
+                }
+            }
+        });
     }
 
     /**
@@ -28,118 +69,29 @@ public class Prueba extends javax.swing.JPanel {
     private void initComponents() {
 
         PIngresoDatos = new javax.swing.JPanel();
-        POferta = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tbOrigen = new javax.swing.JTable();
-        txtOrigen = new javax.swing.JTextField();
-        PDemanda = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        tbDestino = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        lblESD = new javax.swing.JLabel();
         PCostos = new javax.swing.JPanel();
         PTbCostos = new javax.swing.JScrollPane();
         tbCostos = new javax.swing.JTable();
+        spDestino = new javax.swing.JSpinner();
+        spOrigen = new javax.swing.JSpinner();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        btnIngresar = new javax.swing.JButton();
+        btnPrueba = new javax.swing.JButton();
+        btnResolver = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
 
-        PIngresoDatos.setBorder(javax.swing.BorderFactory.createTitledBorder("Ingreso de Datos"));
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Programación Lineal - Método de Transporte");
 
-        POferta.setBorder(javax.swing.BorderFactory.createTitledBorder("Oferta"));
+        PIngresoDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ingreso de Datos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
 
-        jLabel1.setText("Número de Fabricas:");
+        lblESD.setText("ESD115 - 2017 - Programación Lineal");
 
-        tbOrigen.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        PCostos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Matriz de Costos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
 
-            },
-            new String [] {
-                "Origenes"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane2.setViewportView(tbOrigen);
-
-        javax.swing.GroupLayout POfertaLayout = new javax.swing.GroupLayout(POferta);
-        POferta.setLayout(POfertaLayout);
-        POfertaLayout.setHorizontalGroup(
-            POfertaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, POfertaLayout.createSequentialGroup()
-                .addGroup(POfertaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, POfertaLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-        POfertaLayout.setVerticalGroup(
-            POfertaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(POfertaLayout.createSequentialGroup()
-                .addGroup(POfertaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        PDemanda.setBorder(javax.swing.BorderFactory.createTitledBorder("Demanda"));
-
-        jLabel5.setText("Número de Clientes:");
-
-        tbDestino.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Destinos"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane5.setViewportView(tbDestino);
-
-        javax.swing.GroupLayout PDemandaLayout = new javax.swing.GroupLayout(PDemanda);
-        PDemanda.setLayout(PDemandaLayout);
-        PDemandaLayout.setHorizontalGroup(
-            PDemandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PDemandaLayout.createSequentialGroup()
-                .addGroup(PDemandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PDemandaLayout.createSequentialGroup()
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PDemandaLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1)))
-                .addContainerGap())
-        );
-        PDemandaLayout.setVerticalGroup(
-            PDemandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PDemandaLayout.createSequentialGroup()
-                .addGroup(PDemandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        PCostos.setBorder(javax.swing.BorderFactory.createTitledBorder("Matriz de Costos"));
-
+        tbCostos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         tbCostos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -156,7 +108,7 @@ public class Prueba extends javax.swing.JPanel {
             PCostosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PCostosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(PTbCostos, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(PTbCostos, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE)
                 .addContainerGap())
         );
         PCostosLayout.setVerticalGroup(
@@ -166,64 +118,235 @@ public class Prueba extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
+        spDestino.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        spDestino.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spDestinoStateChanged(evt);
+            }
+        });
+
+        spOrigen.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        spOrigen.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spOrigenStateChanged(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("Origenes:");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setText("Destinos:");
+
+        btnIngresar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnIngresar.setText("Ingresar Datos");
+        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarActionPerformed(evt);
+            }
+        });
+
+        btnPrueba.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnPrueba.setText("Cargar Datos de Prueba");
+        btnPrueba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPruebaActionPerformed(evt);
+            }
+        });
+
+        btnResolver.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnResolver.setText("Resolver");
+        btnResolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResolverActionPerformed(evt);
+            }
+        });
+
+        btnLimpiar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnLimpiar.setText("Limpiar");
+
         javax.swing.GroupLayout PIngresoDatosLayout = new javax.swing.GroupLayout(PIngresoDatos);
         PIngresoDatos.setLayout(PIngresoDatosLayout);
         PIngresoDatosLayout.setHorizontalGroup(
             PIngresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PIngresoDatosLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(PIngresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+            .addGroup(PIngresoDatosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(PIngresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(PCostos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(PIngresoDatosLayout.createSequentialGroup()
-                        .addComponent(POferta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(spOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(spDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(PDemanda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(PIngresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnIngresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnPrueba, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(PIngresoDatosLayout.createSequentialGroup()
+                        .addComponent(btnResolver, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+            .addGroup(PIngresoDatosLayout.createSequentialGroup()
+                .addGap(198, 198, 198)
+                .addComponent(lblESD, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PIngresoDatosLayout.setVerticalGroup(
             PIngresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PIngresoDatosLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(PIngresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(POferta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(PDemanda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(PIngresoDatosLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(PIngresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(spDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(spOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18))
+                    .addGroup(PIngresoDatosLayout.createSequentialGroup()
+                        .addComponent(btnIngresar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnPrueba)
+                        .addGap(3, 3, 3)))
                 .addComponent(PCostos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PIngresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnLimpiar)
+                    .addComponent(btnResolver, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblESD))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(PIngresoDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(PIngresoDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(PIngresoDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void spDestinoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spDestinoStateChanged
+        // TODO add your handling code here:
+        destino = (Integer) spDestino.getValue();
+        met.setDestino(destino);
+    }//GEN-LAST:event_spDestinoStateChanged
+
+    private void spOrigenStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spOrigenStateChanged
+        // TODO add your handling code here:
+        origen = (Integer) spOrigen.getValue();
+        met.setOrigen(origen);
+    }//GEN-LAST:event_spOrigenStateChanged
+
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+        // TODO add your handling code here
+        /*Revisando si los JSpinner tienen una cantidad determinada, sin no se ha
+        cambiado su estado de cero, se envía un mensaje para notificarles que deben 
+        modificar esa entrada*/
+        if (destino > 0 && origen > 0) {
+            //Invocando el método crear tabla del Método del transporte
+            met.crearTablaIngresar(tbCostos, costosModel);
+        } else if (origen <= 0) {
+            JOptionPane.showMessageDialog(null, "Debe tener algún origen de donde provienen los productos");
+        } else if (destino <= 0) {
+            JOptionPane.showMessageDialog(null, "Debe tener algún destino donde enviar productos");
+        }
+    }//GEN-LAST:event_btnIngresarActionPerformed
+
+    private void btnPruebaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPruebaActionPerformed
+        // TODO add your handling code here:
+        met.crearTablaPrueba(tbCostos, costosModel);
+        spDestino.setValue(datos.getDemanda().length);
+        spOrigen.setValue(datos.getOferta().length);
+        origen = (Integer) spOrigen.getValue();
+        destino = (Integer) spDestino.getValue();
+        spDestino.setEnabled(false);
+        spOrigen.setEnabled(false);
+    }//GEN-LAST:event_btnPruebaActionPerformed
+
+    private void btnResolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResolverActionPerformed
+        // TODO add your handling code here:
+        Double[][] costos = new Double[origen][destino];
+        // TODO add your handling code here:
+        Integer[][] oferta = new Integer[origen][1], demanda = new Integer[1][destino];
+        for (int i = 0; i <= origen; i++) {
+            for (int j = 0; j <= destino; j++) {
+                if (j < destino && i < origen) {
+                    costos[i][j] = (double) tbCostos.getValueAt(i, j+1);
+                } else if (j >= destino && i < origen) {
+                    oferta[i][0] = (int) tbCostos.getValueAt(i, j+1);
+                } else if (j < destino && i == origen) {
+                    demanda[0][j] = (int) tbCostos.getValueAt(i, j+1);
+                }
+            }
+        }
+        JOptionPane.showMessageDialog(null, "Datos ingresados");
+        met.setCostos(costos);
+        met.setDemanda(demanda);
+        met.setOferta(oferta);
+        Solucion sol=new Solucion();
+        sol.setVisible(true);
+    }//GEN-LAST:event_btnResolverActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            javax.swing.UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Prueba.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Prueba.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Prueba.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Prueba.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Prueba().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PCostos;
-    private javax.swing.JPanel PDemanda;
     private javax.swing.JPanel PIngresoDatos;
-    private javax.swing.JPanel POferta;
     private javax.swing.JScrollPane PTbCostos;
+    private javax.swing.JButton btnIngresar;
+    private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnPrueba;
+    private javax.swing.JButton btnResolver;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblESD;
+    private javax.swing.JSpinner spDestino;
+    private javax.swing.JSpinner spOrigen;
     private javax.swing.JTable tbCostos;
-    private javax.swing.JTable tbDestino;
-    private javax.swing.JTable tbOrigen;
-    private javax.swing.JTextField txtOrigen;
     // End of variables declaration//GEN-END:variables
 }
